@@ -110,6 +110,12 @@ export default class AuthController {
     })
 
     if (!result.ok) {
+      if (result.status === 400 || result.status === 401) {
+        return response.status(401).send({
+          error: 'Authentication failed',
+          message: 'Wrong credentials',
+        })
+      }
       return response.status(result.status).send(result.data)
     }
 
